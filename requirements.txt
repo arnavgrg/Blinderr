@@ -1,8 +1,0 @@
-click==7.1.1
-Flask==1.1.1
-Flask-Debug==0.4.3
-inflection==0.3.1
-itsdangerous==1.1.0
-Jinja2==2.11.1
-MarkupSafe==1.1.1
-Werkzeug==1.0.0
