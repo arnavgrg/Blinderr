@@ -20,6 +20,26 @@ exports.getUserById = function(req, res) {
     })
 }
 
+exports.deleteUserById = function(req, res) {
+    //delete user by mongo id
+    User.findByIdAndRemove(req.params.id, function (err, user) {
+        if (err) {
+            return next(err);
+        }
+        res.send('Deleted successfully!');
+    })
+}
+
+exports.updateUserById = function(req, res) {
+    //update user by mongo id
+    User.findByIdAndUpdate(req.params.id, 
+    	{$set: req.body}, 
+    	function (err, product) {
+        	if (err) return next(err);
+        res.send('Product updated.');
+    });
+}
+
 exports.insertNewUser = function(req, res, next) {
     //insert a new user into mongo users table
     let user = new User(
