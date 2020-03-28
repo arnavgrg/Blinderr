@@ -2,7 +2,15 @@ var express = require('express');
 var router = express.Router();
 const userController = require('../controllers/userController')
 
-/* GET users listing. */
-router.get('/', userController.index);
+/* GET all users */
+router.get('/', userController.listAllUsers);
+
+/* GET a user by mongo id */
+router.get('/:id', userController.getUserById);
+
+/* POST new user */
+router.post('/create', userController.insertNewUser);
+
+
 
 module.exports = router;
