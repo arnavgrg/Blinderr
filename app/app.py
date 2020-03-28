@@ -1,13 +1,15 @@
 from flask import Flask
-from flask_debug import Debug
+from voice.routes import voice_api
+
 app = Flask(__name__)
 
+app.register_blueprint(voice_api)
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+
+@app.route("/")
+def hello():
+    return "Hello World!"
 
 
 if __name__ == "__main__":
-    Debug(app)
-    app.run(debug=True)
+    app.run()
