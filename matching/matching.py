@@ -16,7 +16,7 @@ class Matching(object):
         self.user_ids = payload['user_ids']
         self.descriptions = payload['desc']
         print("Attempting to connect to Bert instance.")
-        self.bc = BertClient(check_length=False)  # ip="52.249.61.86"
+        self.bc = BertClient(ip="34.94.241.99", check_length=False)
         print("Connected to Bert instance.")
         print("Server status:", self.bc.status)
 
@@ -29,18 +29,22 @@ class Matching(object):
                 self.descriptions[idx] = lower_cased_sentence.strip()
 
     def get_embeddings(self):
-        new_user_embedding = self.bc.encode([self.descriptions[0]])
-        other_users_embeddings = self.bc.encode(self.descriptions[1:])
+        user_embeddings = self.bc.encode(self.descriptions)
         length = len(self.user_ids)
         self.similarity_matrix = np.zeros([length])
         for i in range(length):
-            self.similarity_matrix[i] = cosine_similarity([new_user_embedding[0]],
-                                                          [other_users_embeddings[i]])
+            self.similarity_matrix[i] = cosine_similarity([user_embeddings[0]],
+                                                          [user_embeddings[i]])
+        print(self.similarity_matrix)
 
     def get_ranked_matches(self):
         reversed_sorted = np.argsort(self.similarity_matrix)[::-1]
         ranked_ids = []
+        flag = True
         for index in reversed_sorted:
+            if flag:
+                flag = False
+                continue
             ranked_ids.append(self.user_ids[index])
         return ranked_ids
 
@@ -49,6 +53,7 @@ class Matching(object):
         print("Cleaning text input")
         self.clean_paragraphs()
         print("Generating embeddings and building similarity matrix")
+        self.get_embeddings()
         ranked_ids = self.get_ranked_matches()
         return ranked_ids
 
@@ -57,7 +62,7 @@ if __name__ == '__main__':
     # Data Format: 1st is new user, 2nd is remaining/filtered users
     data = {
         "user_ids": [1, 2, 3, 4, 5],
-        "desc": ["abc", "bcd", "xyz", "dcf", "123"]
+        "desc": ["this is an apple", "we like basketball", "orange and mangoes", "balls are bouncy", "apples as red"]
     }
     a = Matching(data)
     print(a.get_matches())
