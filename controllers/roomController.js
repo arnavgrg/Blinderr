@@ -20,11 +20,16 @@ exports.ifUserInRoom = function(req, res, next) {
 }
 
 exports.deleteRoomById = function(req, res) {
-    //delete user by mongo id
     Room.findByIdAndRemove(req.params.roomId, function (err, room) {
         if (err) {
             return next(err);
         }
+
+        //Need to also put these people back into the events
+        //Find the event linked to this room
+        //update people array
+
+
         res.send('Deleted successfully!');
     })
 }
@@ -34,6 +39,7 @@ exports.insertRoom = function(req, res, next) {
         {
             p1: req.body.p1,
             p2: req.body.p2,
+            eventName: "MAINEVENT"
         }
     );
 
