@@ -14,12 +14,18 @@ router.delete('/:id', userController.deleteUserById);
 /* PUT a user by mongo id */
 router.put('/:id', userController.updateUserById);
 
-/* PATCH a match to user's match list (1) */
+/* POST a match to user's match list (1) 
+	to add, put in body 
+	{"matches":"user_id"}
+	don't really need anymore*/
 router.post('/:id/matches', userController.addMatchById);
+
+/* POST a like to user's like list (1), if it is mutual it will get added to matches 
+	{"likes":"user_id"}
+*/
+router.post('/:id/likes', userController.addLikeById);
 
 /* POST new user */
 router.post('/create', userController.insertNewUser);
-
-
 
 module.exports = router;
