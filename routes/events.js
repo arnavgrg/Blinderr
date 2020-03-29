@@ -24,6 +24,6 @@ router.post('/create', eventController.insertNewEvent);
 	userId: idToAdd
 	}
 */
-router.post('/:id/addUser', eventController.addPersonToEventById);
+router.post('/addUser', eventController.addPersonToEventById);
 
 module.exports = router;

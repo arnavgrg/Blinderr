@@ -1,7 +1,7 @@
 const Event = require('../models/event.model')
 
 exports.listAllEvents = function(req, res, next) {
-    //Returns all the users
+    //Returns all the eve
     Event.find({},function (err, docs) {
         if (err) {
             return next(err);
@@ -50,10 +50,11 @@ exports.insertNewEvent = function(req, res, next) {
 
 exports.addPersonToEventById = function(req, res) {
     //add like to array
-    Event.findById(req.params.id, function (err, event) {
+    Event.findOne({"name":"MAINEVENT"}, function (err, event) {
         if (err) {
             return next(err);
         }
+        //console.log(event)
         event.people.addToSet(req.body.userId);
         event.save();
         res.send("Added user to event");
