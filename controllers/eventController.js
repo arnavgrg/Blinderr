@@ -32,18 +32,34 @@ exports.deleteEventById = function(req, res) {
 
 exports.insertNewEvent = function(req, res, next) {
     //insert a new user into mongo users table
-    let user = new Event(
+    let event = new Event(
         {
-            rooms: []
+            name: req.body.name,
+            people: []
         }
     );
 
-    event.save(function (err) {
+    event.save(function (err, insertedEvent) {
         if (err) {
             return next(err);
         }
-        res.send(insertedUser.id);
-    })
+        res.send(insertedEvent.id);
+    }) 
+}
+
+
+exports.addPersonToEventById = function(req, res) {
+    //add like to array
+    Event.findById(req.params.id, function (err, event) {
+        if (err) {
+            return next(err);
+        }
+        event.people.addToSet(req.body.userId);
+        event.save();
+        res.send("Added user to event");
+    });
+
+}
+
 
  //res.send('respond with a resource');
-}

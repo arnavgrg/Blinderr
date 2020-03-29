@@ -9,11 +9,21 @@ router.get('/', eventController.listAllEvents);
 router.get('/:id', eventController.getEventById);
 
 /* DELETE a event by mongo id */
-router.delete('/:id/', eventController.deleteEventById);
+router.delete('/:id', eventController.deleteEventById);
 
-/* POST new event */
+/* POST new event 
+	Need to provide value for 
+	{
+		name:
+	}
+*/
 router.post('/create', eventController.insertNewEvent);
 
-
+/* POST new user into event
+	{
+	userId: idToAdd
+	}
+*/
+router.post('/:id/addUser', eventController.addPersonToEventById);
 
 module.exports = router;

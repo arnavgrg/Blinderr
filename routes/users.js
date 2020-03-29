@@ -21,11 +21,23 @@ router.put('/:id', userController.updateUserById);
 router.post('/:id/matches', userController.addMatchById);
 
 /* POST a like to user's like list (1), if it is mutual it will get added to matches 
+	put in body
 	{"likes":"user_id"}
 */
 router.post('/:id/likes', userController.addLikeById);
 
-/* POST new user */
+/* POST new user 
+	you need to submit in json values for 
+	{
+		name:
+		email:
+		height:
+		age:
+		sexuality:
+		gender:
+		bio:
+	}
+*/
 router.post('/create', userController.insertNewUser);
 
 module.exports = router;
