@@ -31,13 +31,35 @@ exports.deleteUserById = function(req, res) {
 }
 
 exports.updateUserById = function(req, res) {
+
     //update user by mongo id
     User.findByIdAndUpdate(req.params.id, 
     	{$set: req.body}, 
     	function (err, product) {
         	if (err) return next(err);
-        res.send('Product updated.');
+        res.send('User updated.');
     });
+}
+
+exports.addMatchById = function(req, res) {
+    //add match to array
+	console.log(req.body.matches);
+    console.log(req.body);
+    User.findById(req.params.id, function (err, user) {
+        if (err) {
+            return next(err);
+        }
+        user.matches.addToSet(req.body.matches);
+        user.save();
+        res.send(user);
+    })
+
+    
+    /*User.updateOne(
+	    { _id: req.params.id}, 
+	    { matches: [req.body.matches]},
+	    	res.send('Match added.')
+	);*/
 }
 
 exports.insertNewUser = function(req, res, next) {
@@ -51,14 +73,16 @@ exports.insertNewUser = function(req, res, next) {
 		    sexuality: req.body.sexuality,
 		    gender: req.body.gender,
 		    bio: req.body.bio,
+		    matches: [""]
         }
     );
 
-    user.save(function (err) {
+    user.save(function (err, insertedUser) {
         if (err) {
             return next(err);
         }
-        res.send('User Created successfully')
+        //return the id of user just made
+        res.send(insertedUser.id)
     })
 
  //res.send('respond with a resource');
