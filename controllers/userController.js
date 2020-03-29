@@ -43,8 +43,8 @@ exports.updateUserById = function(req, res) {
 
 exports.addMatchById = function(req, res) {
     //add match to array
-	console.log(req.body.matches);
-    console.log(req.body);
+	//console.log(req.body.matches);
+    //console.log(req.body);
     User.findById(req.params.id, function (err, user) {
         if (err) {
             return next(err);
@@ -53,13 +53,57 @@ exports.addMatchById = function(req, res) {
         user.save();
         res.send(user);
     })
+}
 
-    
-    /*User.updateOne(
-	    { _id: req.params.id}, 
-	    { matches: [req.body.matches]},
-	    	res.send('Match added.')
-	);*/
+exports.addLikeById = function(req, res) {
+    console.log(req.body);
+    currentUserId = req.params.id
+    console.log(currentUserId);
+    //add like to array
+    User.findById(req.params.id, function (err, user) {
+        if (err) {
+            return next(err);
+        }
+        user.likes.addToSet(req.body.likes);
+        user.save();
+        //res.send(user);
+    });
+
+    //If likes are mutual, add match to both
+    User.find({ "_id": req.body.likes, "likes": currentUserId}, function (err, likedUserIfMatch) {
+        if (err) {
+            return next(err);
+        }
+        
+        if (!likedUserIfMatch.length || !likedUserIfMatch) {
+            //no user returned, no like, save it
+            res.send('Saved like');
+        }
+        else {
+            //update other person
+            console.log(likedUserIfMatch);
+            //there is a match
+
+            User.findById(currentUserId, function (err, user) {
+                if (err) {
+                    return next(err);
+                }
+                    user.matches.addToSet(req.body.likes);
+                    user.save();
+                
+            })
+            //the other user add to matches
+            User.findById(req.body.likes, function (err, user) {
+                if (err) {
+                    return next(err);
+                }
+                user.matches.addToSet(currentUserId);
+                user.save();
+            });
+            res.send('Matched');
+        }
+    });
+
 }
 
 exports.insertNewUser = function(req, res, next) {
@@ -73,7 +117,8 @@ exports.insertNewUser = function(req, res, next) {
 		    sexuality: req.body.sexuality,
 		    gender: req.body.gender,
 		    bio: req.body.bio,
-		    matches: [""]
+		    matches: [],
+            likes: []
         }
     );
 

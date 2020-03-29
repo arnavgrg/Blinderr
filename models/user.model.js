@@ -9,7 +9,8 @@ let UserSchema = new Schema({
     sexuality: {type: String, required: true},
     gender: {type: String, required: true},
     bio: {type: String, required: true},
-    matches: {type: Array}
+    matches: {type: Array},
+    likes: {type: Array}
 });
 
 
