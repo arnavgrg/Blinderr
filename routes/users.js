@@ -9,10 +9,13 @@ router.get('/', userController.listAllUsers);
 router.get('/:id', userController.getUserById);
 
 /* DELETE a user by mongo id */
-router.delete('/:id/delete', userController.deleteUserById);
+router.delete('/:id', userController.deleteUserById);
 
-/* UPDATE a user by mongo id */
-router.put('/:id/update', userController.updateUserById);
+/* PUT a user by mongo id */
+router.put('/:id', userController.updateUserById);
+
+/* PATCH a match to user's match list (1) */
+router.post('/:id/matches', userController.addMatchById);
 
 /* POST new user */
 router.post('/create', userController.insertNewUser);
