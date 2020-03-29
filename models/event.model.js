@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let EventSchema = new Schema({
-    rooms: {type: Array, required: true},
+	name: {type: String, required: true},
+    people: {type: Array, required: true} 
 });
 
 
