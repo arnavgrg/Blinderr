@@ -40,4 +40,11 @@ router.post('/:id/likes', userController.addLikeById);
 */
 router.post('/create', userController.insertNewUser);
 
+/* post a person that you just saw 
+	{ 
+		seen:
+	}
+*/
+router.post('/:id/seen', userController.addSeenById);
+
 module.exports = router;

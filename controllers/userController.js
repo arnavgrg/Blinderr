@@ -55,6 +55,18 @@ exports.addMatchById = function(req, res) {
     })
 }
 
+exports.addSeenById = function(req, res) {
+    //add seen
+    User.findById(req.params.id, function (err, user) {
+        if (err) {
+            return next(err);
+        }
+        user.seen.addToSet(req.body.seen);
+        user.save();
+        res.send(user);
+    })
+}
+
 exports.addLikeById = function(req, res) {
     console.log(req.body);
     currentUserId = req.params.id
@@ -118,7 +130,8 @@ exports.insertNewUser = function(req, res, next) {
 		    gender: req.body.gender,
 		    bio: req.body.bio,
 		    matches: [],
-            likes: []
+            likes: [],
+            seen: []
         }
     );
 
