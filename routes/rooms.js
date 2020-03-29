@@ -7,7 +7,7 @@ const roomController = require('../controllers/roomController')
 router.get('/:userToCheck', roomController.ifUserInRoom);
 
 //Delete a room from p1 standpoint
-router.delete('/:roomId', roomController.deleteRoomById);
+router.delete('/:id', roomController.deleteRoomById);
 
 //Create a room
 router.post('/create', roomController.insertRoom);
