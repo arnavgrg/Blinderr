@@ -10,8 +10,8 @@ More info: https://devpost.com/software/love-is-blind
 - Arnav Garg
 
 ## Tech
-Front-end: TypeScript with React 
-Back-end: Node.js, Python, MongoDB, Twilio Programmable Video
-Cloud: GCP (Container Service, Kubernetes, VM), Docker, Heroku, Twilio Serverless Service
-Machine learning: BERT language representation model
+- Front-end: TypeScript with React 
+- Back-end: Node.js, Python, MongoDB, Twilio Programmable Video
+- Cloud: GCP (Container Service, Kubernetes, VM), Docker, Heroku, Twilio Serverless Service
+- Machine learning: BERT
 
