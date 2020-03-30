@@ -39,11 +39,11 @@ class Matching(object):
 
     def get_ranked_matches(self):
         reversed_sorted = np.argsort(self.similarity_matrix)[::-1]
+        print(reversed_sorted)
+        print(self.user_ids)
         ranked_ids = []
-        flag = True
         for index in reversed_sorted:
-            if flag:
-                flag = False
+            if not index:
                 continue
             ranked_ids.append(self.user_ids[index])
         return ranked_ids
@@ -55,14 +55,7 @@ class Matching(object):
         print("Generating embeddings and building similarity matrix")
         self.get_embeddings()
         ranked_ids = self.get_ranked_matches()
-        return ranked_ids
-
-
-if __name__ == '__main__':
-    # Data Format: 1st is new user, 2nd is remaining/filtered users
-    data = {
-        "user_ids": [1, 2, 3, 4, 5],
-        "desc": ["this is an apple", "we like basketball", "orange and mangoes", "balls are bouncy", "apples as red"]
-    }
-    a = Matching(data)
-    print(a.get_matches())
+        ranked = {
+            "ranked_ids": ranked_ids
+        }
+        return ranked
